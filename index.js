@@ -9,8 +9,6 @@ require("dotenv/config");
 app.use(bodyParser.json());
 app.use("/api/users", userRoute);
 
-mongoose.connect(process.env.DB_LINK, { useCreateIndex: true }, () =>
-  console.log("DB connected")
-);
+mongoose.connect(process.env.DB_LINK, () => console.log("DB connected"));
 
 app.listen(process.env.PORT, console.log("Server is running"));
