@@ -3,8 +3,23 @@ const User = require("../models/users.js");
 
 class Users {
   async getUsers(req, res) {
-    const data = await User.find();
     try {
+      if (req.query) {
+        console.log(req.query);
+        if (req.query.sort) {
+          User.sort(req.query.sort.split(",").join(" "));
+        }
+        if (req.query.field) {
+          User.field(req.query.field.split(","), join(" "));
+        }
+        if (req.query.page && req.query.limit) {
+          const page = req.query.page || 1;
+          const limit = req.query.limit || 5;
+          const skip = (page - 1) * limit;
+          User.skip(skip).limit(limit);
+        }
+      }
+      const data = await User.find();
       res.status(200).json({
         message: "Success",
         body: data,
